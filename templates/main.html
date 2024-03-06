@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      *,
+      *::before,
+      *::before {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .wrapper {
+        display: flex;
+        gap: 1rem;
+        height: 100vh;
+        position: relative;
+      }
+
+      .overlay {
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .loader {
+        width: 40px;
+        height: 40px;
+        border: 5px solid #fff;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+      }
+
+      @keyframes rotation {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .sidebar {
+        width: 300px;
+        height: 100vh;
+        overflow-y: scroll;
+        flex-shrink: 0;
+        background-color:#6ABDDB;
+        padding:  2rem 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: left;
+        font-family: 'Century Gothic', sans-serif;
+      }
+
+      .sidebar img {
+        width: 100px; /* Adjust width of the logo */
+        height: auto; /* Maintain aspect ratio */
+        margin-bottom: 1rem; /* Add space below the logo */
+        border-radius: 0; /* Apply rounded corners to the logo */
+      }
+
+      .sidebar h2 {
+        font-size: 18px;
+        padding-bottom: 1rem;
+        background-color: #6ABDDB;
+        font-family: 'Century Gothic', sans-serif;
+      }
+
+      .sidebar p {
+        padding-bottom: 0.5rem;
+        background-color:#6ABDDB;
+      }
+
+      .main-container {
+        padding: 2rem 1rem;
+        overflow-y: scroll;
+        width: 100%;
+      }
+
+      .header-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .main-container h1 {
+        font-size: 56px;
+        font-weight: 600;
+        font-family: 'Century Gothic', sans-serif;
+      }
+
+      .content {
+        padding-top: 1rem;
+      }
+
+      .extracted-text-container {
+        padding-top: 2rem;
+        font-family: 'Century Gothic', sans-serif;
+      }
+
+      .extracted-text-container h2 {
+        font-size: 18px;
+        font-family: 'Century Gothic', sans-serif;
+      }
+
+      .file-content {
+        padding-top: 12px;
+      }
+
+      .score-btn {
+        margin-top: 2rem;
+      }
+
+      .table-container {
+        padding-top: 2rem;
+      }
+
+      .table-container h2 {
+        font-size: 18px;
+        padding-bottom: 1rem;
+        font-family: 'Century Gothic', sans-serif;
+      }
+
+      .score-wrapper {
+        padding-top: 2rem;
+      }
+
+      .round2-wrapper {
+        padding-top: 2rem;
+      }
+
+      .score-status {
+        padding-top: 1rem;
+      }
+
+      .fail-reason{
+        padding-top: 1rem;
+      }
+
+      .fail-reason h2{
+        font-size: 18px;
+      }
+
+      .fail-reason .reason-content{
+        padding-top: 12px;
+      }
+
+      .logout-btn {
+        padding: 15px 30px; /* Increase padding for larger size */
+        border-radius: 10px; /* Adjust border-radius for button shape */
+        background-color: #215572; /* Change background color to blue */
+        color: white; /* Set text color to white */
+        font-family: 'Century Gothic', sans-serif;
+      }
+
+      .file-upload-form button {
+          padding: 12px 24px; /* Increase padding for larger size */
+          border-radius: 8px; /* Adjust border-radius for button shape */
+          background-color: #215572; /* Change background color to blue */
+          color: white; /* Set text color to white */
+          font-family: 'Century Gothic', sans-serif;
+      }
+
+      .score-btn {
+          padding: 15px 30px; /* Increase padding for larger size */
+          border-radius: 10px; /* Adjust border-radius for button shape */
+          background-color: #215572; /* Change background color to blue */
+          color: white; /* Set text color to white */
+          font-family: 'Century Gothic', sans-serif;
+      }
+
+      .check-round2-btn {
+          padding: 15px 30px; /* Increase padding for larger size */
+          border-radius: 10px; /* Adjust border-radius for button shape */
+          background-color: #215572; /* Change background color to blue */
+          color: white; /* Set text color to white */
+          font-family: 'Century Gothic', sans-serif;
+      }
+
+      .upload-file-form button {
+          padding: 15px 30px; /* Increase padding for larger size */
+          border-radius: 10px; /* Adjust border-radius for button shape */
+          background-color: #215572; /* Change background color to blue */
+          color: white; /* Set text color to white */
+          font-family: 'Century Gothic', sans-serif;
+      }
+
+      .check-round2-btn {
+          padding: 15px 30px; /* Increase padding for larger size */
+          border-radius: 10px; /* Adjust border-radius for button shape */
+          background-color: #215572; /* Change background color to blue */
+          color: white; /* Set text color to white */
+          font-family: 'Century Gothic', sans-serif;
+      }
+
+    </style>
+    <title>Blue Badge</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="overlay" id="overlay" style="display: none">
+        <div class="loader"></div>
+      </div>
+      <aside class="sidebar">
+        <img src="{{url_for('static', filename='image.png')}}" align="left" style="background-color: white; width: 150px; height: auto;"x />
+        <h2>Instructions for use:</h2>
+        <p>
+          1. Click on the Browse Files button to select a form for assessment.
+        </p>
+        <p>
+          2. Select the form by choosing the one you want to assess from the
+          system.
+        </p>
+        <p>
+          3. Once the form is selected, the toolkit will fetch the text and
+          start assessing the form.
+        </p>
+        <p>
+          4. Watch the progress bar to gauge the time required for assessment.
+        </p>
+        <p>
+          5. The toolkit will proceed to ‘Round 2’ if the candidate scores more
+          than 40 marks.
+        </p>
+        <p>
+          6. Wait till the assessment is done for ‘Round 2’ and the Final Score
+          is displayed.
+        </p>
+      </aside>
+      <main class="main-container">
+        <div class="header-container">
+          <h1>Blue Badge Assesment Toolkit</h1>
+          <form method="post" action="/logout">
+            <button id="logout-btn" class="logout-btn">Logout</button>
+          </form>
+        </div>
+
+        <div class="content">
+          <form class="file-upload-form" id="upload-file-form">
+            <input type="file" name="file" id="file" />
+            <button type="submit">Extract Text</button>
+          </form>
+        </div>
+
+        <div class="extracted-text-container" style="display: none">
+          <h2>Extracted Text</h2>
+          <div class="file-content" id="file-content"></div>
+        </div>
+        <button class="score-btn" id="score-btn" style="display: none">
+          Score the document
+        </button>
+        <div
+          class="table-container"
+          id="round1-table-container"
+          style="display: none"
+        >
+          <h2>Round 1 Results</h2>
+          <table>
+            <thead>
+              <th>Sr No.</th>
+              <th>Question</th>
+              <th>Answer</th>
+              <th>Score</th>
+            </thead>
+            <tbody id="round1-tbody"></tbody>
+          </table>
+        </div>
+        <div class="score-wrapper" id="round1-score"></div>
+        <div class="score-status" id="round1-score-status"></div>
+        <div class="fail-reason" style="display: none" id="round1-fail-reason">
+          <h2>Reasons for Rejection</h2>
+          <p class="reason-content" id="round1-reason-content"></p>
+        </div>
+
+        <div class="round2-wrapper" style="display: none" id="round2-wrapper">
+          <button id="check-round2-btn">Check for round 2</button>
+          <div
+            class="table-container"
+            id="round2-table-container"
+            style="display: none"
+          >
+            <h2>Round 2 Results</h2>
+            <table>
+              <thead>
+                <th>Sr No.</th>
+                <th>Question</th>
+                <th>Answer</th>
+                <th>Score</th>
+              </thead>
+              <tbody id="round2-tbody"></tbody>
+            </table>
+          </div>
+
+          <div class="score-wrapper" id="round2-score"></div>
+          <div class="score-status" id="round2-score-status"></div>
+          <div class="fail-reason" style="display: none" id="round2-fail-reason">
+            <h2>Reasons for Rejection</h2>
+            <p class="reason-content" id="round2-reason-content"></p>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script>
+      const overlay = document.getElementById("overlay");
+      const form = document.getElementById("upload-file-form");
+      const scoreBtn = document.getElementById("score-btn");
+      const round2Wrapper = document.getElementById("round2-wrapper");
+      const round2ScoreBtn = document.getElementById("check-round2-btn");
+      const extractedTextContainer = document.querySelector(
+        ".extracted-text-container"
+      );
+
+      const setLoading = (loadingState) => {
+        if (loadingState) {
+          overlay.style.display = "flex";
+        } else {
+          overlay.style.display = "none";
+        }
+      };
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault(); // Prevent default form submission
+
+        setLoading(true);
+        const formData = new FormData();
+        const file = document.getElementById("file").files[0];
+        formData.append("file", file);
+
+        try {
+          const res = await fetch("/extract-text", {
+            method: "POST",
+            body: formData,
+          });
+
+          const data = await res.json();
+
+          if (res.ok) {
+            extractedTextContainer.style.display = "block";
+            const fileContent = document.getElementById("file-content");
+            fileContent.innerHTML = data.extracted_text;
+            scoreBtn.style.display = "block";
+          } else {
+            console.log(data);
+          }
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
+      });
+
+      scoreBtn.addEventListener("click", async (event) => {
+        event.preventDefault();
+
+        setLoading(true);
+
+        const round1TableContainer = document.getElementById(
+          "round1-table-container"
+        );
+        const round1tbody = document.getElementById("round1-tbody");
+        const round1Score = document.getElementById("round1-score");
+        const round1ScoreStatus = document.getElementById(
+          "round1-score-status"
+        );
+        const round1FailReason = document.getElementById("round1-fail-reason");
+        const round1FailReasonContent =
+          document.getElementById("round1-reason-content");
+
+        try {
+          const res = await fetch("/analyze-pdf", {
+            method: "GET",
+          });
+          const data = await res.json();
+          console.log(data)
+          const parsedData = JSON.parse(data.data);
+          let totalScore = 0;
+
+          parsedData.forEach(function (rowData, index) {
+            const row = document.createElement("tr");
+            const cell = document.createElement("td");
+            cell.textContent = index + 1;
+            row.appendChild(cell);
+            for (const key in rowData) {
+              if (key === "Score") {
+                totalScore += Number(rowData[key]);
+              }
+              const cell = document.createElement("td");
+              cell.textContent = rowData[key];
+              row.appendChild(cell);
+            }
+            round1tbody.appendChild(row);
+          });
+
+          round1Score.textContent = `Round 1 Score: ${totalScore}`;
+          round1TableContainer.style.display = "block";
+          if (totalScore >= 40) {
+            round1ScoreStatus.textContent = "Round 1 Cleared";
+            round1ScoreStatus.style.color = "green";
+            round2Wrapper.style.display = "block";
+          } else {
+            round1ScoreStatus.textContent = "Round 1 Failed";
+            round1ScoreStatus.style.color = "red";
+            round1FailReason.style.display = "block";
+            round1FailReasonContent.textContent = data.reason;
+          }
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
+      });
+
+      round2ScoreBtn.addEventListener("click", async (event) => {
+        event.preventDefault();
+
+        setLoading(true);
+
+        const round2TableContainer = document.getElementById(
+          "round2-table-container"
+        );
+        const round2tbody = document.getElementById("round2-tbody");
+        const round2Score = document.getElementById("round2-score");
+        const round2ScoreStatus = document.getElementById(
+          "round2-score-status"
+        );
+        const round2FailReason = document.getElementById("round2-fail-reason");
+        const round2FailReasonContent =
+          document.getElementById("round2-reason-content");
+
+        try {
+          const res = await fetch("/check-round-two", {
+            method: "GET",
+          });
+          const data = await res.json();
+          const totalScore = data.total_score;
+          const parsedData = JSON.parse(data.data);
+
+          parsedData.forEach(function (rowData, index) {
+            const row = document.createElement("tr");
+            const cell = document.createElement("td");
+            cell.textContent = index + 1;
+            row.appendChild(cell);
+            for (const key in rowData) {
+              const cell = document.createElement("td");
+              cell.textContent = rowData[key];
+              row.appendChild(cell);
+            }
+            round2tbody.appendChild(row);
+          });
+
+          round2Score.textContent = `Total Score: ${totalScore || 0}`;
+          if (totalScore >= 60) {
+            round2ScoreStatus.textContent = "Round 2 Cleared";
+            round2ScoreStatus.style.color = "green";
+          } else {
+            round2ScoreStatus.textContent = "Round 2 Failed";
+            round2ScoreStatus.style.color = "red";
+            round2FailReason.style.display = "block";
+            round2FailReasonContent.textContent = data.reason;
+          }
+          round2TableContainer.style.display = "block";
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
+      });
+    </script>
+  </body>
+</html>
