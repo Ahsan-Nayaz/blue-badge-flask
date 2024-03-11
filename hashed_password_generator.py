@@ -11,6 +11,6 @@ def generate_hashed_password(pwd: str) -> str:
 # Example usage
 if __name__ == "__main__":
     # Replace "password123" with the actual password you want to hash
-    password = "8Jasn!c"
+    password = "7aShdgb&a"
     hashed_password = generate_hashed_password(password)
     print("Hashed Password:", hashed_password)

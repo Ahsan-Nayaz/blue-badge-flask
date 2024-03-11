@@ -68,5 +68,5 @@ async def authenticate_user(email: str, password: str):
     result = await loop.run_in_executor(None, pbkdf2_sha256.verify, password, user.password)
     if not result:
         return False
-
+    await conn.close()
     return user.email
