@@ -25,11 +25,9 @@ app = Quart(__name__)
 # Session(app)
 app.secret_key = os.getenv("SESSION_SECRET_KEY")  # Set a secret key for session management
 
-
-
 llm = AzureChatOpenAI(
-    azure_endpoint=os.getenv("ENDPOINT"),
-    openai_api_key=os.getenv("API KEY"),
+    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+    openai_api_key=os.getenv("AZURE_OPENAI_API_KEY"),
     azure_deployment="gpt-4-1106",
     openai_api_version="2023-09-01-preview",
 )
