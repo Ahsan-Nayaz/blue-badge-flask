@@ -15,7 +15,7 @@ def _signal_handler(*_) -> None:
 
 
 config = Config()
-config.bind = ["0.0.0.0:5000"]  # As an example configuration setting
+config.bind = ["0.0.0.0:8000"]  # As an example configuration setting
 
 if __name__ == '__main__':
     asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
