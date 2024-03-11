@@ -48,7 +48,7 @@ async def evaluate(chain: RunnableSerializable[dict, str], question: str, docs: 
     return answer.replace('\'', '').replace('\"', '')
 
 
-async def convert_to_list_of_dicts(input_dict):
+async def convert_to_list_of_dicts(input_dict: dict) -> json:
     output_list = []
     for question, data in input_dict.items():
         output_list.append({

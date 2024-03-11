@@ -1,9 +1,13 @@
-python-dotenv
-quart
+python-dotenv~=1.0.1
+quart~=0.19.4
 langchain-community
 langchain-openai
 langchain-experimental
 langchain
 PyMuPDF
-asyncpg
-passlib
+asyncpg~=0.29.0
+passlib~=1.7.4
+pydantic~=2.6.3
+Werkzeug~=3.0.1
+uvloop~=0.19.0
+Hypercorn~=0.16.0
