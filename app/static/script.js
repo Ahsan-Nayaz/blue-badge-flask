@@ -174,4 +174,11 @@ round2ScoreBtn.addEventListener("click", async (event) => {
     } finally {
         setLoading(false);
     }
+
 });
+
+function resetZoom() {
+  alert('You can reset the zoom level to 100% using your browser settings or keyboard shortcuts:');
+  alert('- Ctrl + 0 (on Windows/Linux)\n- Cmd + 0 (on macOS)');
+};
+resetZoom();
