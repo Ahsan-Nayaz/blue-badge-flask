@@ -1,123 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-          rel="stylesheet">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}" />
     <title>Blue Badge</title>
-</head>
-<body>
-<div class="wrapper">
-    <div class="overlay" id="overlay" style="display: none">
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="overlay" id="overlay" style="display: none">
         <div class="loader"></div>
-    </div>
-    <aside class="sidebar">
-        <img src="{{url_for('static', filename='Logo-White.png')}}" align="left"/>
+      </div>
+
+      <aside class="sidebar" id="sidebar">
+        <button id="close-sidebar-btn" class="close-icon">
+          <img src="{{ url_for('static', filename='close.svg') }}" width="30" height="30" />
+        </button>
+
+        <img class="logo" src="{{url_for('static', filename='Logo-White.png')}}" align="left" />
         <h2>Instructions for use:</h2>
+        <p>1. Click on the Browse Files button to select a form for assessment.</p>
+        <p>2. Select the form by choosing the one you want to assess from the system.</p>
         <p>
-            1. Click on the Browse Files button to select a form for assessment.
+          3. Once the form is selected, the toolkit will fetch the text and start assessing the
+          form.
         </p>
-        <p>
-            2. Select the form by choosing the one you want to assess from the
-            system.
-        </p>
-        <p>
-            3. Once the form is selected, the toolkit will fetch the text and
-            start assessing the form.
-        </p>
-        <p>
-            4. Watch the progress bar to gauge the time required for assessment.
-        </p>
-        <p>
-            5. The toolkit will proceed to ‘Round 2’ if the candidate scores more
-            than 40 marks.
-        </p>
-        <p>
-            6. Wait till the assessment is done for ‘Round 2’ and the Final Score
-            is displayed.
-        </p>
-    </aside>
-    <main class="main-container">
+        <p>4. Watch the progress bar to gauge the time required for assessment.</p>
+        <p>5. The toolkit will proceed to ‘Round 2’ if the candidate scores more than 40 marks.</p>
+        <p>6. Wait till the assessment is done for ‘Round 2’ and the Final Score is displayed.</p>
+      </aside>
+
+      <main class="main-container">
         <div class="header-container">
-            <h1 style="margin-top:2rem">Blue Badge Assessment Toolkit</h1>
-            <form method="post" action="/logout">
-                <button id="logout-btn" class="logout-btn">Logout</button>
-            </form>
+          <div class="title-cont">
+            <button class="menu" id="menu-btn">
+              <img src="{{url_for('static', filename='hamburger.svg')}}" />
+            </button>
+            <h1>Blue Badge Assessment Toolkit</h1>
+          </div>
+
+          <form method="post" action="/logout">
+            <button id="logout-btn" class="logout-btn">Logout</button>
+          </form>
         </div>
 
         <div class="content">
-            <form class="file-upload-form" id="upload-file-form">
-                <input class="input-file" type="file" name="file" id="file" required/>
-                <label tabindex="0" for="file" class="input-file-trigger">Select a file...</label>
-                <button class="upload-file-form" type="submit">Extract Text</button>
-            </form>
-            <p class="file-return"></p>
+          <form class="file-upload-form" id="upload-file-form">
+            <input class="input-file" type="file" name="file" id="file" required />
+            <label tabindex="0" for="file" class="input-file-trigger">Select a file...</label>
+            <button class="upload-file-form" type="submit">Extract Text</button>
+          </form>
+          <p class="file-return"></p>
         </div>
 
         <div class="extracted-text-container" style="display: none">
-            <h2>Extracted Text</h2>
-            <div class="file-content" id="file-content"></div>
+          <h2>Extracted Text</h2>
+          <div class="file-content" id="file-content"></div>
         </div>
-        <button class="score-btn" id="score-btn" style="display: none">
-            Score the document
-        </button>
-        <div
-                class="table-container"
-                id="round1-table-container"
-                style="display: none"
-        >
-            <h2>Round 1 Results</h2>
+
+        <button class="score-btn" id="score-btn" style="display: none">Score the document</button>
+
+        <div class="table-container" id="round1-table-container" style="display: none">
+          <h2>Round 1 Results</h2>
+          <table>
+            <thead>
+              <th>Sr No.</th>
+              <th>Question</th>
+              <th>Answer</th>
+              <th>Score</th>
+            </thead>
+            <tbody id="round1-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="score-wrapper" id="round1-score"></div>
+        <div class="score-status" id="round1-score-status"></div>
+        <div class="fail-reason" style="display: none" id="round1-fail-reason">
+          <h2>Reasons for Rejection</h2>
+          <p class="reason-content" id="round1-reason-content"></p>
+        </div>
+
+        <br />
+
+        <div class="round2-wrapper" style="display: none" id="round2-wrapper">
+          <button id="check-round2-btn" class="check-round2-btn">Check for round 2</button>
+          <div class="table-container" id="round2-table-container" style="display: none">
+            <h2>Round 2 Results</h2>
             <table>
-                <thead>
+              <thead>
                 <th>Sr No.</th>
                 <th>Question</th>
                 <th>Answer</th>
                 <th>Score</th>
-                </thead>
-                <tbody id="round1-tbody"></tbody>
+              </thead>
+              <tbody id="round2-tbody"></tbody>
             </table>
-        </div>
-        <div class="score-wrapper" id="round1-score"></div>
-        <div class="score-status" id="round1-score-status"></div>
-        <div class="fail-reason" style="display: none" id="round1-fail-reason">
-            <h2>Reasons for Rejection</h2>
-            <p class="reason-content" id="round1-reason-content"></p>
-        </div>
-        <br>
-        <div class="round2-wrapper" style="display: none" id="round2-wrapper">
-            <button id="check-round2-btn" class="check-round2-btn">Check for round 2</button>
-            <div
-                    class="table-container"
-                    id="round2-table-container"
-                    style="display: none"
-            >
-                <h2>Round 2 Results</h2>
-                <table>
-                    <thead>
-                    <th>Sr No.</th>
-                    <th>Question</th>
-                    <th>Answer</th>
-                    <th>Score</th>
-                    </thead>
-                    <tbody id="round2-tbody"></tbody>
-                </table>
-            </div>
+          </div>
 
-            <div class="score-wrapper" id="round2-score"></div>
-            <div class="score-status" id="round2-score-status"></div>
-            <div class="fail-reason" style="display: none" id="round2-fail-reason">
-                <h2>Reasons for Rejection</h2>
-                <p class="reason-content" id="round2-reason-content"></p>
-            </div>
+          <div class="score-wrapper" id="round2-score"></div>
+          <div class="score-status" id="round2-score-status"></div>
+          <div class="fail-reason" style="display: none" id="round2-fail-reason">
+            <h2>Reasons for Rejection</h2>
+            <p class="reason-content" id="round2-reason-content"></p>
+          </div>
         </div>
-    </main>
-</div>
-<script src="{{ url_for('static', filename='script.js') }}"></script>
-</body>
+      </main>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
 </html>
