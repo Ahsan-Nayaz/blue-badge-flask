@@ -67,6 +67,13 @@ form.addEventListener("submit", async (event) => {
     round2Wrapper.style.display = "none";
     round1FailReason.style.display = "none";
     round2FailReason.style.display = "none";
+    round1Score.textContent = ``;
+    round1ScoreStatus.textContent = "";
+    round2Score.textContent = ``;
+    round2ScoreStatus.textContent = "";
+    round1FailReasonContent.textContent = "";
+    round2FailReasonContent.textContent = "";
+
     const formData = new FormData();
     var the_return = document.querySelector(".file-return");
     const file = document.getElementById("file").files[0];
