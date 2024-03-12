@@ -64,6 +64,9 @@ form.addEventListener("submit", async (event) => {
     setLoading(true);
     round1TableContainer.style.display = "none";
     round2TableContainer.style.display = "none";
+    round2Wrapper.style.display = "none";
+    round1FailReason.style.display = "none";
+    round2FailReason.style.display = "none";
     const formData = new FormData();
     var the_return = document.querySelector(".file-return");
     const file = document.getElementById("file").files[0];
