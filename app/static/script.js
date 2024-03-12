@@ -6,6 +6,8 @@ const round2ScoreBtn = document.getElementById("check-round2-btn");
 const extractedTextContainer = document.querySelector(".extracted-text-container");
 const fileInput = document.querySelector("#file"),
   the_return = document.querySelector(".file-return");
+const accLabel = document.getElementById("acc-label");
+const accIcon = document.querySelector(".acc-icon");
 const menuBtn = document.getElementById("menu-btn");
 const sidebar = document.getElementById("sidebar");
 const clonseSidebarBtn = document.getElementById("close-sidebar-btn");
@@ -25,6 +27,10 @@ function toggleDropdown() {
 
 menuBtn.addEventListener("click", toggleSidebar);
 clonseSidebarBtn.addEventListener("click", toggleSidebar);
+
+accLabel.addEventListener("click", () => {
+  accIcon.classList.toggle("rotate");
+});
 
 const setLoading = (loadingState) => {
   if (loadingState) {
@@ -93,6 +99,10 @@ scoreBtn.addEventListener("click", async (event) => {
     const parsedData = JSON.parse(data.data);
     let totalScore = data.score;
 
+    while (round1tbody.firstChild) {
+      round1tbody.removeChild(round1tbody.firstChild);
+    }
+
     parsedData.forEach(function (rowData, index) {
       const row = document.createElement("tr");
       const cell = document.createElement("td");
@@ -103,6 +113,7 @@ scoreBtn.addEventListener("click", async (event) => {
         cell.textContent = rowData[key];
         row.appendChild(cell);
       }
+
       round1tbody.appendChild(row);
     });
 

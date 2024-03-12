@@ -62,7 +62,6 @@
       <main class="main-container">
         <div class="content">
           <form class="file-upload-form" id="upload-file-form">
-            <!-- <input type="file" name="file" id="file" required /> -->
             <div class="drop_box">
               <header>
                 <h4>Select File here</h4>
@@ -78,8 +77,9 @@
         </div>
 
         <div class="extracted-text-container" style="display: none">
-          <label for="state">
+          <label for="state" class="acc-title" id="acc-label">
             <div class="accordian-button"><h2>Extracted Text</h2></div>
+            <img src="{{ url_for('static', filename='right-icon.svg') }}" width="22" height="22" class="acc-icon">
           </label>
           <input type="checkbox" id="state" hidden />
           <div class="accordian-content">
