@@ -48,7 +48,7 @@ form.addEventListener("submit", async (event) => {
         const data = await res.json();
 
         if (res.ok) {
-            extractedTextContainer.style.display = "block";
+            extractedTextContainer.style.display = "flex";
             const fileContent = document.getElementById("file-content");
             fileContent.innerHTML = data.extracted_text;
             scoreBtn.style.display = "block";
@@ -176,9 +176,11 @@ round2ScoreBtn.addEventListener("click", async (event) => {
     }
 
 });
+//function resetZoom() {
+//  alert('You can reset the zoom level to 100% using your browser settings or keyboard shortcuts:\n- Ctrl + 0 (on Windows/Linux)\n- Cmd + 0 (on macOS)');
+//}
+//resetZoom();
+//var scale = 'scale(1)';document.body.style.webkitTransform =  scale;    // Chrome, Opera, Safaridocument.body.style.msTransform =   scale;       // IE 9document.body.style.transform = scale;
 
-function resetZoom() {
-  alert('You can reset the zoom level to 100% using your browser settings or keyboard shortcuts:');
-  alert('- Ctrl + 0 (on Windows/Linux)\n- Cmd + 0 (on macOS)');
-};
-resetZoom();
+//var scale = 'scale(1)';
+//document.body.style.webkitTransform =  scale;    // Chrome, Opera, Safaridocument.body.style.msTransform =   scale;       // IE 9document.body.style.transform = scale;
