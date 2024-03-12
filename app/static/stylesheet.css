@@ -206,12 +206,12 @@
 }
 
 .acc-icon {
-  transform: rotate(90deg);
+  transform: rotate(0deg);
   transition: transform 0.4s;
 }
 
 .rotate {
-  transform: rotate(0deg);
+  transform: rotate(90deg);
 }
 
 .extracted-text-container h2 {
