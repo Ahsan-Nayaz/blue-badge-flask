@@ -23,6 +23,24 @@
         <div class="loader"></div>
       </div>
 
+      <header class="header-container">
+        <div class="title-cont">
+          <button class="menu" id="menu-btn">
+            <img src="{{url_for('static', filename='hamburger.svg')}}" />
+          </button>
+          <h1>Blue Badge Assessment Toolkit</h1>
+        </div>
+
+        <div class="dropdown" onclick="toggleDropdown()">
+          <img src="{{url_for('static', filename='threedots.svg')}}" width="25px" height="30px" />
+          <div class="dropdown-content" id="dropdownContent">
+            <form method="post" action="/logout">
+              <button id="logout-btn" class="logout-btn">Logout</button>
+            </form>
+          </div>
+        </div>
+      </header>
+
       <aside class="sidebar" id="sidebar">
         <button id="close-sidebar-btn" class="close-icon">
           <img src="{{ url_for('static', filename='close.svg') }}" width="30" height="30" />
@@ -42,34 +60,36 @@
       </aside>
 
       <main class="main-container">
-        <div class="header-container">
-          <div class="title-cont">
-            <button class="menu" id="menu-btn">
-              <img src="{{url_for('static', filename='hamburger.svg')}}" />
-            </button>
-            <h1>Blue Badge Assessment Toolkit</h1>
-          </div>
-
-          <form method="post" action="/logout">
-            <button id="logout-btn" class="logout-btn">Logout</button>
-          </form>
-        </div>
-
         <div class="content">
           <form class="file-upload-form" id="upload-file-form">
-            <input class="input-file" type="file" name="file" id="file" required />
-            <label tabindex="0" for="file" class="input-file-trigger">Select a file...</label>
-            <button class="upload-file-form" type="submit">Extract Text</button>
+            <!-- <input type="file" name="file" id="file" required /> -->
+            <div class="drop_box">
+              <header>
+                <h4>Select File here</h4>
+              </header>
+              <p>Files Supported: PDF</p>
+              <input type="file" accept=".pdf" name="file" id="file" required class="input-file" />
+              <div>Choose File</div>
+            </div>
+
+            <button class="btn extract-text-btn" type="submit">Extract Text</button>
           </form>
           <p class="file-return"></p>
         </div>
 
         <div class="extracted-text-container" style="display: none">
-          <h2>Extracted Text</h2>
-          <div class="file-content" id="file-content"></div>
+          <label for="state">
+            <div class="accordian-button"><h2>Extracted Text</h2></div>
+          </label>
+          <input type="checkbox" id="state" hidden />
+          <div class="accordian-content">
+            <div class="inner" id="file-content"></div>
+          </div>
         </div>
 
-        <button class="score-btn" id="score-btn" style="display: none">Score the document</button>
+        <button class="score-btn btn" id="score-btn" style="display: none">
+          Score the document
+        </button>
 
         <div class="table-container" id="round1-table-container" style="display: none">
           <h2>Round 1 Results</h2>
@@ -94,7 +114,7 @@
         <br />
 
         <div class="round2-wrapper" style="display: none" id="round2-wrapper">
-          <button id="check-round2-btn" class="check-round2-btn">Check for round 2</button>
+          <button id="check-round2-btn" class="check-round2-btn btn">Check for round 2</button>
           <div class="table-container" id="round2-table-container" style="display: none">
             <h2>Round 2 Results</h2>
             <table>

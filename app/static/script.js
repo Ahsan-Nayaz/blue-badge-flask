@@ -4,8 +4,7 @@ const scoreBtn = document.getElementById("score-btn");
 const round2Wrapper = document.getElementById("round2-wrapper");
 const round2ScoreBtn = document.getElementById("check-round2-btn");
 const extractedTextContainer = document.querySelector(".extracted-text-container");
-const fileInput = document.querySelector(".input-file"),
-  button = document.querySelector(".input-file-trigger"),
+const fileInput = document.querySelector("#file"),
   the_return = document.querySelector(".file-return");
 const menuBtn = document.getElementById("menu-btn");
 const sidebar = document.getElementById("sidebar");
@@ -19,6 +18,11 @@ const toggleSidebar = () => {
   }
 };
 
+function toggleDropdown() {
+  const dropdownContent = document.getElementById("dropdownContent");
+  dropdownContent.classList.toggle("show");
+}
+
 menuBtn.addEventListener("click", toggleSidebar);
 clonseSidebarBtn.addEventListener("click", toggleSidebar);
 
@@ -30,18 +34,8 @@ const setLoading = (loadingState) => {
   }
 };
 
-button.addEventListener("keydown", function (event) {
-  if (event.keyCode == 13 || event.keyCode == 32) {
-    fileInput.focus();
-  }
-});
-
-button.addEventListener("click", function (event) {
-  fileInput.focus();
-  return false;
-});
-
 fileInput.addEventListener("change", function (event) {
+  console.log("fefe");
   const fileName = this.value.split("\\").pop();
   the_return.innerHTML = fileName;
 });
@@ -64,7 +58,7 @@ form.addEventListener("submit", async (event) => {
     const data = await res.json();
 
     if (res.ok) {
-      extractedTextContainer.style.display = "flex";
+      extractedTextContainer.style.display = "block";
       const fileContent = document.getElementById("file-content");
       fileContent.innerHTML = data.extracted_text;
       scoreBtn.style.display = "block";
