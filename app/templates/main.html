@@ -32,7 +32,12 @@
         </div>
 
         <div class="dropdown" onclick="toggleDropdown()">
-          <img src="{{url_for('static', filename='threedots.svg')}}" width="25px" height="30px" />
+          <img
+            src="{{url_for('static', filename='threedots.svg')}}"
+            id="three-dots"
+            width="25px"
+            height="30px"
+          />
           <div class="dropdown-content" id="dropdownContent">
             <form method="post" action="/logout">
               <button id="logout-btn" class="logout-btn">Logout</button>
@@ -78,8 +83,17 @@
 
         <div class="extracted-text-container" style="display: none">
           <label for="state" class="acc-title" id="acc-label">
+            <img
+              src="{{ url_for('static', filename='right-icon.svg') }}"
+              width="15"
+              height="15"
+              class="acc-icon"
+            />
             <div class="accordian-button"><h2>Extracted Text</h2></div>
-            <img src="{{ url_for('static', filename='right-icon.svg') }}" width="22" height="22" class="acc-icon">
+            <div class="tooltip">
+              <img src="{{ url_for('static', filename='info.svg') }}" width="15" height="15" />
+              <span class="tooltiptext">Expand this to view full extracted text</span>
+            </div>
           </label>
           <input type="checkbox" id="state" hidden />
           <div class="accordian-content">
