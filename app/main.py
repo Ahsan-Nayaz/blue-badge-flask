@@ -20,9 +20,7 @@ MAX_TOKEN = 1200
 TEMPERATURE = 0.0
 
 app = Quart(__name__)
-# app.config['SESSION_TYPE'] = 'memcached'
-# app.config['SESSION_PROTECTION'] = True
-# Session(app)
+
 app.secret_key = os.getenv("SESSION_SECRET_KEY")  # Set a secret key for session management
 
 llm = AzureChatOpenAI(
