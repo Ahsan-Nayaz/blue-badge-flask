@@ -123,6 +123,14 @@ const setLoading = (loadingState) => {
 };
 
 fileInput.addEventListener("change", function (event) {
+  const files = event.dataTransfer.files;
+  if (files.length <= 0) return;
+  const file = files[0];
+  if (file.type !== "application/pdf") {
+    fileInput.files = [];
+    return;
+  }
+
   const fileName = this.value.split("\\").pop();
   the_return.innerHTML = fileName;
   resetBlueBadge();
@@ -131,11 +139,16 @@ fileInput.addEventListener("change", function (event) {
 form.addEventListener("submit", async (event) => {
   event.preventDefault(); // Prevent default form submission
 
+  var the_return = document.querySelector(".file-return");
+  const file = document.getElementById("file").files[0];
+
+  if (file.type !== "application/pdf") {
+    return;
+  }
+
   setLoading(true);
 
   const formData = new FormData();
-  var the_return = document.querySelector(".file-return");
-  const file = document.getElementById("file").files[0];
   formData.append("file", file);
 
   try {
