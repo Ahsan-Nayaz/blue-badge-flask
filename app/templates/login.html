@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;1,400;1,500&display=swap"
       rel="stylesheet"
     />
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
     <style>
       *,
       *::before,
@@ -76,11 +76,22 @@
         margin-left: auto;
         margin-right: auto;
         max-width: 320px;
-      }
-
-      .form-group {
+        display: flex;
+        align-items: center;
         margin-bottom: 16px;
         position: relative;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+      }
+
+      .form-group .icon-wrapper {
+        width: 55px;
+        height: 40px;
+        display: flex; 
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(228 228 231);
+        overflow: hidden;
       }
 
       .form-group.password {
@@ -144,43 +155,18 @@
         height: 40px;
         outline: none !important;
         color: rgba(0, 0, 0, 0.85);
-        transition: all 0.2s ease-in-out;
         font-family: "Roboto", sans-serif;
         padding: 10px 12px;
         border-radius: 4px;
-        border: 1px solid #ddd;
         font-size: 1rem;
+        border: none;
         width: -webkit-fill-available;
-      }
-
-      .form-group label {
-        position: absolute;
-        top: 13px;
-        left: 12px;
-        text-align: left;
-        display: inline-block;
-        padding: 0 4px;
-        height: 14px;
-        line-height: 14px;
-        font-size: 14px;
-        font-weight: 400;
-        background: #fff;
-        color: rgba(0, 0, 0, 0.5);
-        margin: 0px auto;
-        cursor: text;
-        transition: all 0.15s ease-in-out;
       }
 
       input:hover,
       input:focus {
-        border: 1px solid #000;
-      }
-
-      input:valid + label,
-      input:focus + label {
-        top: -6px;
-        color: #000;
-        font-weight: bold;
+        border: none;
+        outline: none;
       }
 
       .gl-form-asterisk {
@@ -201,18 +187,21 @@
     <div class="wrapper">
       <form class="form" id="login-form" action="/login" method="post">
         <div class="logo-wrapper">
-          <img
-            src="static/somerset-logo.svg"
-            alt="North Somerset Council"
-            class="logo"
-          />
+          <img src="static/somerset-logo.svg" alt="North Somerset Council" class="logo" />
         </div>
 
         <p class="welcome">Welcome</p>
         <p class="login-text">Login to access the app</p>
 
         <div class="form-group">
+          <div class="icon-wrapper">
+            <img src="static/user.svg" width="20" height="20" alt="" />
+          </div>
+
           <input
+            autocomplete="username"
+            class="form-input"
+            placeholder="Username"
             id="username"
             name="username"
             class="form-control"
@@ -221,15 +210,20 @@
             autocomplete="username"
             autoCorrect="off"
             required
-            value = "{{username}}"
+            value="{{username}}"
           />
-          <label for="form_name1"
-            >Username<span class="gl-form-asterisk"></span
-          ></label>
+          <label for="form_name1" hidden>Username<span class="gl-form-asterisk"></span></label>
         </div>
 
         <div class="form-group password">
+          <div class="icon-wrapper">
+            <img src="static/lock.svg" width="20" height="20" alt="" />
+          </div>
+
           <input
+            class="form-input"
+            placeholder="Password"
+            required
             id="password"
             name="password"
             class="form-control"
@@ -238,19 +232,12 @@
             autocapitalize="none"
             autocomplete="password"
             autoCorrect="off"
-            value = "{{password}}"
+            value="{{password}}"
           />
-          <label for="form_name2"
-            >Password<span class="gl-form-asterisk"></span
-          ></label>
+          <label for="form_name2" hidden>Password<span class="gl-form-asterisk"></span></label>
 
           <button class="pass-btn" id="toggle-pass-vis" type="button">
-            <img
-              src="static/eye.svg"
-              class="pass-icon"
-              id="pass-icon"
-              data-visible="false"
-            />
+            <img src="static/eye.svg" class="pass-icon" id="pass-icon" data-visible="false" />
           </button>
         </div>
         <p id="error" class="error">{{error}}</p>
@@ -266,8 +253,7 @@
       const errorMessage = document.getElementById("error");
 
       togglePassBtn.addEventListener("click", () => {
-        const isPassVisible =
-          togglePassIcon.getAttribute("data-visible") === "true";
+        const isPassVisible = togglePassIcon.getAttribute("data-visible") === "true";
 
         if (isPassVisible) {
           togglePassIcon.setAttribute("src", "static/eye.svg");
@@ -288,54 +274,54 @@
         errorMessage.textContent = "";
       });
 
-    //   loginBtn.addEventListener("click", async (event) => {
-    //     event.preventDefault();
+      //   loginBtn.addEventListener("click", async (event) => {
+      //     event.preventDefault();
 
-    //     const username = document.getElementById("username").value;
-    //     const password = document.getElementById("password").value;
+      //     const username = document.getElementById("username").value;
+      //     const password = document.getElementById("password").value;
 
-    //     const payload = {
-    //       username: username,
-    //       password: password,
-    //     };
+      //     const payload = {
+      //       username: username,
+      //       password: password,
+      //     };
 
-    //     try {
-    //       // Loading set to true
-    //       loginBtn.setAttribute("disabled", true);
-    //       loginBtn.textContent = "Logging in";
+      //     try {
+      //       // Loading set to true
+      //       loginBtn.setAttribute("disabled", true);
+      //       loginBtn.textContent = "Logging in";
 
-    //       const res = await fetch(`${APP_API_URL}/token`, {
-    //         method: "POST",
-    //         headers: {
-    //           Accept: "application/json",
-    //           "Content-Type": "application/x-www-form-urlencoded",
-    //         },
-    //         body: new URLSearchParams(payload),
-    //       });
+      //       const res = await fetch(`${APP_API_URL}/token`, {
+      //         method: "POST",
+      //         headers: {
+      //           Accept: "application/json",
+      //           "Content-Type": "application/x-www-form-urlencoded",
+      //         },
+      //         body: new URLSearchParams(payload),
+      //       });
 
-    //       if (res.ok) {
-    //         const data = await res.json();
-    //         const accessToken = data.access_token;
-    //         localStorage.setItem("access_token", accessToken);
-    //         window.location.assign(
-    //           `${APP_REDIRECT_URI}?accessToken=${accessToken}`
-    //         );
-    //       } else {
-    //         const error = await res.json();
-    //         throw new Error(error?.detail);
-    //       }
-    //     } catch (error) {
-    //       if (error instanceof Error) {
-    //         errorMessage.textContent =
-    //           error?.message ??
-    //           "There was a problem parsing your request. Please try again!";
-    //       }
-    //     } finally {
-    //       // Loading set to false
-    //       loginBtn.setAttribute("disabled", false);
-    //       loginBtn.textContent = "Login";
-    //     }
-    //   });
+      //       if (res.ok) {
+      //         const data = await res.json();
+      //         const accessToken = data.access_token;
+      //         localStorage.setItem("access_token", accessToken);
+      //         window.location.assign(
+      //           `${APP_REDIRECT_URI}?accessToken=${accessToken}`
+      //         );
+      //       } else {
+      //         const error = await res.json();
+      //         throw new Error(error?.detail);
+      //       }
+      //     } catch (error) {
+      //       if (error instanceof Error) {
+      //         errorMessage.textContent =
+      //           error?.message ??
+      //           "There was a problem parsing your request. Please try again!";
+      //       }
+      //     } finally {
+      //       // Loading set to false
+      //       loginBtn.setAttribute("disabled", false);
+      //       loginBtn.textContent = "Login";
+      //     }
+      //   });
     </script>
   </body>
 </html>
