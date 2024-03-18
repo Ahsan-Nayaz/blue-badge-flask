@@ -25,6 +25,52 @@ const round2ScoreStatus = document.getElementById("round2-score-status");
 const round2FailReason = document.getElementById("round2-fail-reason");
 const round2FailReasonContent = document.getElementById("round2-reason-content");
 
+fileInput.addEventListener("dragover", function (event) {
+  event.preventDefault();
+
+  if (event.dataTransfer.types.includes("Files")) {
+    const files = event.dataTransfer.files;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (file.type !== "application/pdf") {
+        event.dataTransfer.dropEffect = "none";
+        return;
+      }
+    }
+    event.dataTransfer.dropEffect = "copy";
+  }
+});
+
+const resetBlueBadge = () => {
+  extractedTextContainer.style.display = "none";
+  scoreBtn.style.display = "none";
+  round1TableContainer.style.display = "none";
+  round2TableContainer.style.display = "none";
+  round2Wrapper.style.display = "none";
+  round1FailReason.style.display = "none";
+  round2FailReason.style.display = "none";
+  round1Score.textContent = ``;
+  round1ScoreStatus.textContent = "";
+  round2Score.textContent = ``;
+  round2ScoreStatus.textContent = "";
+  round1FailReasonContent.textContent = "";
+  round2FailReasonContent.textContent = "";
+};
+
+fileInput.addEventListener("drop", function (event) {
+  event.preventDefault();
+  const files = event.dataTransfer.files;
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    if (file.type === "application/pdf") {
+      const fileName = file.name;
+      the_return.innerHTML = fileName;
+      fileInput.files = event.dataTransfer.files;
+      resetBlueBadge();
+    }
+  }
+});
+
 const toggleSidebar = () => {
   if (sidebar.classList.contains("open")) {
     sidebar.classList.remove("open");
@@ -79,19 +125,7 @@ const setLoading = (loadingState) => {
 fileInput.addEventListener("change", function (event) {
   const fileName = this.value.split("\\").pop();
   the_return.innerHTML = fileName;
-  extractedTextContainer.style.display = "none";
-  scoreBtn.style.display = "none";
-  round1TableContainer.style.display = "none";
-  round2TableContainer.style.display = "none";
-  round2Wrapper.style.display = "none";
-  round1FailReason.style.display = "none";
-  round2FailReason.style.display = "none";
-  round1Score.textContent = ``;
-  round1ScoreStatus.textContent = "";
-  round2Score.textContent = ``;
-  round2ScoreStatus.textContent = "";
-  round1FailReasonContent.textContent = "";
-  round2FailReasonContent.textContent = "";
+  resetBlueBadge();
 });
 
 form.addEventListener("submit", async (event) => {
